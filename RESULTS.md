@@ -19,22 +19,37 @@
 
 ## Part A results
 
-| Step | Test type    | Users | Req/s | p(95)   | Max     | Failed | Checks |
-| ---- | ------------ | ----- | ----- | ------- | ------- | ------ | ------ |
-| A1   | Smoke        | 1     | 0.535 | 377.39ms | 393.47ms | 0%  | 100%   |
+| Step | Test type    | Users | Req/s | p(95)   | Max      | Failed | Checks |
+| ---- | ------------ | ----- | ----- | ------- | -------- | ------ | ------ |
+| A1   | Smoke        | 1     | 0.535 | 377.39ms | 393.47ms | 0% | 100% |
 | A2   | Average load | 3     | 1.314 | 361.44ms | 393.57ms | 0% | 100% |
-| A3   | Stress       | 5     | 2.17   | 365ms    | 385ms    | 0% | 100% |
-| A4   | Spike        | 5     | 1.05    | 364ms   | 383ms    | 0% | 100% |
-| A5   | Soak         | 2     |       |         |         |        |        |
+| A3   | Stress       | 5     | 2.17  | 365ms    | 385ms    | 0% | 100% |
+| A4   | Spike        | 5     | 1.05  | 364ms    | 383ms    | 0% | 100% |
+| A5   | Soak         | 2     | 0.98  | 384ms    | 424ms    | 0% | 100% |
 
 ## Part B
 
 1. 
-2. 
-3. 
-4. 
-5. 
-6. 
-7. 
-8. 
-9.
+| Step | Test type    | Users | Req/s | p(95)   | Max      | Failed | Checks |
+| ---- | ------------ | ----- | ----- | ------- | -------- | ------ | ------ |
+| A1   | Smoke        | 1     | 0.535 | 377.39ms | 393.47ms | 0% | 100% |
+| A2   | Average load | 3     | 1.314 | 361.44ms | 393.57ms | 0% | 100% |
+| A3   | Stress       | 5     | 2.17  | 365ms    | 385ms    | 0% | 100% |
+| A4   | Spike        | 5     | 1.05  | 364ms    | 383ms    | 0% | 100% |
+| A5   | Soak         | 2     | 0.98  | 384ms    | 424ms    | 0% | 100% |
+2. Each user waits for a response and sleeps for 1 second before sending the next request. This reduces the request rate.
+3. No significant increase occurred. The p(95) changed from 361.44 ms to 365 ms, so the system remained stable within the tested limit of 5 users.
+4. It returned close to the normal level in about 20 seconds after the spike.
+5. No. The response time stayed similar, and the error rate remained at 0%. A longer test could reveal a memory leak.
+6. The average can hide slow requests. The p(95) shows the response time that 95% of requests meet or stay below.
+7. Internet latency can affect response time. Also, a public server may have different workloads from other users.
+8. It could overload the server, affect real users, and violate the website's terms of use.
+9. Vague: The shopping app should load quickly.
+- Testable: With 3 concurrent users, 95% of product searches must finish within 1 second, with less than 1% request failures.
+K6 thresholds:
+
+thresholds: {
+  http_req_duration: ['p(95)<1000'],
+  http_req_failed: ['rate<0.01'],
+  checks: ['rate>0.99'],
+}
