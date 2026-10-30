@@ -11,7 +11,11 @@
 - Step 0.7, rules that passed, p(95), p(99), exit code after your change:
   - Original requirement: All rules passed. p(95) = 380.41 ms and p(99) = 389.54 ms. The failure rate was 0.00%. Exit code = 0.
   - After changing p(95) from 1000 ms to 300 ms: The p(95) rule failed because the measured value was 373.08 ms. The p(99), request failure rate, and checks rules passed. Exit code = 99.
-- Step 0.8, what was wrong, and how the checks showed it:
+- Step 0.8, Bug Hunt:
+  - Before fixing: 195/225 checks passed (86.66%). The no pepperoni check passed 67/75 times, and the no knife needed check passed 53/75 times.
+  - The problem was the ingredient and tool names in the request. The API uses `Pepperoni` and `Knife`, so I changed the values from lowercase to the exact names returned by the API.
+  - After fixing: All 225/225 checks passed (100%). All three checks passed, and the HTTP request failure rate was 0%.
+  - Testing with 5 VUs for 20 seconds found the problem because it checked many pizza recommendations. A single manual request might not show the problem every time.
 
 ## Part A results
 
