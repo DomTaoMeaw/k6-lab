@@ -7,7 +7,7 @@
 - Step 0.3, iterations: 20 iterations shared among 5 VUs. All 20 iterations completed successfully in 5.7 seconds. Checks passed 100%, with an average response time of 257.96 ms and p(95) of 265.70 ms.
 - Step 0.4, Pizza API: POST request with Authorization token returned HTTP 200. All 3 checks passed (100%). The pizza name was defined and all ingredients were vegetarian. Average response time was 348.31 ms.
 - Step 0.5, No Token: The API returned HTTP 401 when the Authorization token was missing. The status check passed (100%), and http_req_failed was 0.00% because 401 was configured as an expected status. Average response time was 270.6 ms.
-- Step 0.6, exit code of the normal run and of the run with P95=300:
+- Step 0.6, Thresholds: With the default P95 threshold of 1500 ms, the test passed with an actual P95 of 253.76 ms and exit code 0. I then reduced the threshold to 300 ms. The test still passed because the actual P95 was 258.29 ms, which was below 300 ms. Both runs had 100% checks and 0% failed requests.
 - Step 0.7, rules that passed, p(95), p(99), exit code after your change:
 - Step 0.8, what was wrong, and how the checks showed it:
 
