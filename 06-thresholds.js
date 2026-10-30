@@ -2,6 +2,13 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
+const BASE_URL = 'https://quickpizza.grafana.com';
+const PARAMS = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: 'token abcdef0123456789',
+  },
+};
 const P95 = __ENV.P95 || 1500;
 
 export const options = {
@@ -15,11 +22,11 @@ export const options = {
 };
 
 export default function () {
-  const res = http.get('https://quickpizza.grafana.com/');
-
+  const body = JSON.stringify({ mustBeVegetarian: true });
+  const res = http.post(`${BASE_URL}/api/pizza`, body, PARAMS);
   check(res, {
     'status is 200': (r) => r.status === 200,
+    'pizza has a name': (r) => r.json('pizza.name') !== undefined,
   });
-
   sleep(1);
 }
