@@ -9,6 +9,8 @@
 - Step 0.5, No Token: The API returned HTTP 401 when the Authorization token was missing. The status check passed (100%), and http_req_failed was 0.00% because 401 was configured as an expected status. Average response time was 270.6 ms.
 - Step 0.6, Thresholds: Ran the test with 3 VUs for 30 seconds. With the default P95 threshold of 1500 ms, the test passed. The measured p95 was 388.93 ms and the exit code was 0. Then, I changed P95 to 300 ms. The test failed because the measured p95 was 376.86 ms, which exceeded the threshold. The exit code was 99. All checks passed (100%), and `http_req_failed` was 0.00% in both runs.
 - Step 0.7, rules that passed, p(95), p(99), exit code after your change:
+  - Original requirement: All rules passed. p(95) = 380.41 ms and p(99) = 389.54 ms. The failure rate was 0.00%. Exit code = 0.
+  - After changing p(95) from 1000 ms to 300 ms: The p(95) rule failed because the measured value was 373.08 ms. The p(99), request failure rate, and checks rules passed. Exit code = 99.
 - Step 0.8, what was wrong, and how the checks showed it:
 
 ## Part A results
