@@ -5,6 +5,7 @@
 - Step 0.1, http_req_duration: **278.83 ms** (avg and p(95))
 - Step 0.2, requests, rate and p(95), and why the rate stays below 5: 80 requests, 3.81 req/s, p(95) = 268.97 ms. The rate stays below 5 because each VU waits for the HTTP response and then sleeps for 1 second before starting the next iteration.
 - Step 0.3, iterations: 20 iterations shared among 5 VUs. All 20 iterations completed successfully in 5.7 seconds. Checks passed 100%, with an average response time of 257.96 ms and p(95) of 265.70 ms.
+- Step 0.4, Pizza API: POST request with Authorization token returned HTTP 200. All 3 checks passed (100%). The pizza name was defined and all ingredients were vegetarian. Average response time was 348.31 ms.
 - Step 0.6, exit code of the normal run and of the run with P95=300:
 - Step 0.7, rules that passed, p(95), p(99), exit code after your change:
 - Step 0.8, what was wrong, and how the checks showed it:
